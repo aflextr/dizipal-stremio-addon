@@ -2,6 +2,7 @@ require("dotenv").config({ path: "./.env" })
 const MANIFEST = require('./manifest');
 const landing = require("./src/landingTemplate");
 const header = require('./src/header');
+const {publishToCentral} = require("stremio-addon-sdk");
 const axios = require("axios");
 const fs = require('fs')
 const Path = require("path");
@@ -214,7 +215,7 @@ app.get('/addon/stream/:type/:id/', async (req, res, next) => {
     }
 })
 
-app.get('/addon/subtitles/:type/:id/:query.json', async (req, res, next) => {
+app.get('/addon/subtitles/:type/:id/:query?.json', async (req, res, next) => {
     try {
         var { type, id } = req.params;
         id = String(id).replace(".json", "");
@@ -307,3 +308,5 @@ if (module.parent) {
         console.log(`extension running port : ${process.env.PORT}`)
     });
 }
+
+//publishToCentral(process.env.HOSTING_URL+"/manifest.json")

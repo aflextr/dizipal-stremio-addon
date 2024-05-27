@@ -21,6 +21,7 @@
     "express": "^4.19.2",
     "node-cache": "^5.1.2",
     "path": "^0.12.7",
+    "stremio-addon-sdk": "^1.6.10",
     "subtitle-converter": "^3.0.12",
     "uuid": "^9.0.1"
   }
