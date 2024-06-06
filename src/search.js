@@ -1,8 +1,15 @@
 require("dotenv").config({ path: "../.env" });
-const axios = require("axios");
 const header = require("./header");
 const sslfix = require("./sslfix");
 const cheerio = require("cheerio");
+const Axios = require('axios')
+const axiosRetry = require("axios-retry").default;
+const { setupCache } = require("axios-cache-interceptor");
+
+
+const instance = Axios.create();
+const axios = setupCache(instance);
+axiosRetry(axios, { retries: 2 });
 
 
 async function SearchMovieAndSeries(name) {

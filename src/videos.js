@@ -1,11 +1,16 @@
 require("dotenv").config({ path: "../.env" });
-const axios = require("axios");
 const header = require("./header");
 const sslfix = require("./sslfix");
 const cheerio = require("cheerio");
-const axiosRetry = require("axios-retry");
+const Axios = require('axios')
+const axiosRetry = require("axios-retry").default;
+const { setupCache } = require("axios-cache-interceptor");
 
-axiosRetry.default(axios, { retries: 4 });
+const instance = Axios.create();
+const axios = setupCache(instance);
+axiosRetry(axios, { retries: 2 });
+
+
 async function GetVideos(id) {
     try {
         var response = await axios({ ...sslfix, url: process.env.PROXY_URL + id, headers: header, method: "GET" });
@@ -40,15 +45,14 @@ async function ScrapeVideoUrl(scrapeUrl) {
                     if (fileMatch && fileMatch[1]) {
                         playerFileLink = fileMatch[1];
                     }
-                    if (subtitleMatch && typeof(subtitleMatch) !== "null"){ 
-                        subtitles = subtitleMatch[1].split(",") ;
+                    if (subtitleMatch && typeof (subtitleMatch) !== "null") {
+                        subtitles = subtitleMatch[1].split(",");
                     }
 
                 }
             });
-
-            const video = {
-                videoUrl : playerFileLink,
+            var video = {
+                url: playerFileLink,
                 subtitles: subtitles,
             }
 
@@ -59,5 +63,6 @@ async function ScrapeVideoUrl(scrapeUrl) {
         console.log(error);
     }
 }
+
 
 module.exports = { GetVideos }

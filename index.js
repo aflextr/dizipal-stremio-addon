@@ -3,7 +3,6 @@ const MANIFEST = require('./manifest');
 const landing = require("./src/landingTemplate");
 const header = require('./src/header');
 const {publishToCentral} = require("stremio-addon-sdk");
-const axios = require("axios");
 const fs = require('fs')
 const Path = require("path");
 const express = require("express");
@@ -14,6 +13,16 @@ const path = require("path");
 const NodeCache = require("node-cache");
 const { v4: uuidv4 } = require('uuid');
 const subsrt = require('subtitle-converter');
+const Axios = require('axios')
+const axiosRetry = require("axios-retry").default;
+const { setupCache } = require("axios-cache-interceptor");
+
+const instance = Axios.create();
+const axios = setupCache(instance);
+axiosRetry(axios, { retries: 2 });
+
+
+
 
 const CACHE_MAX_AGE = 4 * 60 * 60; // 4 hours in seconds
 const STALE_REVALIDATE_AGE = 4 * 60 * 60; // 4 hours
@@ -103,6 +112,11 @@ app.get("/addon/catalog/:type/:id/search=:search", async (req, res, next) => {
         var { type, id, search } = req.params;
         search = search.replace(".json", "");
         if (id == "dizipal") {
+            res.set('Cache-Control', `public, max-age=${CACHE_MAX_AGE}, stale-while-revalidate:${STALE_REVALIDATE_AGE}, stale-if-error:${STALE_ERROR_AGE}`);
+            var cached = myCache.get(search+type)
+            if (cached) {
+                return respond(res, { metas: cached });
+            }
             var metaData = [];
             var video = await searchVideo.SearchMovieAndSeries(search);
 
@@ -128,6 +142,7 @@ app.get("/addon/catalog/:type/:id/search=:search", async (req, res, next) => {
                     }
                 }
             }
+            myCache.set(search+type,metaData);
             return respond(res, { metas: metaData });
         }
     } catch (error) {
@@ -141,10 +156,16 @@ app.get('/addon/meta/:type/:id/', async (req, res, next) => {
         var { type, id } = req.params;
         id = String(id).replace(".json", "");
         var metaObj = {};
+        var cached = myCache.get(id);
+        if (cached) {
+            return respond(res, { meta: cached })
+        }
 
         var data = await searchVideo.SearchMetaMovieAndSeries(id, type);
 
         if (data) {
+            res.set('Cache-Control', `public, max-age=${CACHE_MAX_AGE}, stale-while-revalidate:${STALE_REVALIDATE_AGE}, stale-if-error:${STALE_ERROR_AGE}`);
+
             metaObj = {
                 id: id,
                 type: type,
@@ -181,8 +202,10 @@ app.get('/addon/meta/:type/:id/', async (req, res, next) => {
                         });
                     }
                 }
+                myCache.set(id, metaObj);
                 return respond(res, { meta: metaObj })
             } else {
+                myCache.set(id, metaObj);
                 return respond(res, { meta: metaObj })
             }
 
@@ -197,16 +220,21 @@ app.get('/addon/meta/:type/:id/', async (req, res, next) => {
 
 app.get('/addon/stream/:type/:id/', async (req, res, next) => {
     try {
-        var stream = [];
+        res.set('Cache-Control', `public, max-age=${CACHE_MAX_AGE}, stale-while-revalidate:${STALE_REVALIDATE_AGE}, stale-if-error:${STALE_ERROR_AGE}`);
         var { type, id } = req.params;
         id = String(id).replace(".json", "");
         if (id) {
+            var cached = myCache.get(id);
+            if (cached) {
+                return respond(res, { streams: [cached] })
+            }
             var video = await listVideo.GetVideos(id);
             if (video) {
-                const stream = { url: video.videoUrl };
+                const stream = {url:video.url};
                 if (video.subtitles) {
                     myCache.set(id, video.subtitles);
                 }
+                myCache.set(id,[stream]);
                 return respond(res, { streams: [stream] })
             }
         }

@@ -2,7 +2,7 @@ require("dotenv").config({path:"./.env"})
 const manifest = {
 
     id: 'org.dizipal-stremio-addon',
-    version: '1.0.0',
+    version: '1.0.1',
 
     name: 'Dizipal',
     description: "Dizipal'den dizi ve filmleri stremionuza getirir.  Proxy Kullandığımız için eklenti yavaş çalışabilir.",
