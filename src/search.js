@@ -22,6 +22,8 @@ async function SearchMovieAndSeries(name) {
                     values = value.data;
                 }
             }
+        }).catch((error)=>{
+            console.log(error);
         })
     } catch (error) {
         if (error) console.log(error);

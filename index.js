@@ -28,7 +28,7 @@ const CACHE_MAX_AGE = 4 * 60 * 60; // 4 hours in seconds
 const STALE_REVALIDATE_AGE = 4 * 60 * 60; // 4 hours
 const STALE_ERROR_AGE = 7 * 24 * 60 * 60; // 7 days
 
-const myCache = new NodeCache({ stdTTL: 100, checkperiod: 120 });
+const myCache = new NodeCache({ stdTTL: 100, checkperiod: 21600 });
 
 app.use(express.static(path.join(__dirname, "static")));
 
@@ -224,17 +224,12 @@ app.get('/addon/stream/:type/:id/', async (req, res, next) => {
         var { type, id } = req.params;
         id = String(id).replace(".json", "");
         if (id) {
-            var cached = myCache.get(id);
-            if (cached) {
-                return respond(res, { streams: [cached] })
-            }
             var video = await listVideo.GetVideos(id);
             if (video) {
                 const stream = {url:video.url};
                 if (video.subtitles) {
                     myCache.set(id, video.subtitles);
                 }
-                myCache.set(id,[stream]);
                 return respond(res, { streams: [stream] })
             }
         }
@@ -251,14 +246,15 @@ app.get('/addon/subtitles/:type/:id/:query?.json', async (req, res, next) => {
         var data = myCache.get(id)
         if (data) {
             for (const value of data) {
-                if (value.includes("Türkçe")) {
+                
+                if (String(value).includes("Türkçe")) {
                     var url = String(value).replace("[Türkçe]", "");
                     var newUrl = await WriteSubtitles(url, uuidv4());
                     if (newUrl) {
                         subtitles.push({ url: newUrl, lang: "tur" });
                     }
                 }
-                if (value.includes("İngilizce")) {
+                if (String(value).includes("İngilizce")) {
                     var url = String(value).replace("[İngilizce]", "");
                     var newUrl = await WriteSubtitles(url, uuidv4());
                     if (newUrl) {
