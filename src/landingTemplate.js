@@ -155,7 +155,7 @@ function landingTemplate(manifest) {
          <div class="separator"></div>
          <p>dizipal yurtdışından erişimde CloudFlare ile korunduğundan bu eklentinin çeşitli maliyetleri olmaktadır. Bu maliyetleri ne kadar uzun süre karşılayabilirim bilemediğimden yapacağınız en küçük bağış eklentinin hayatta kalabilmesi için faydalı olacaktır.<br>
          <div class="separator"></div>
-         <p>BTC: 1611ZefZzjWYoXLSp4zddggBY65VHXnvWG<br>
+         <p>IBAN: TR05 0006 2000 6800 0006 6257 26  Eyüp Elitaş<br>
          <p>İletişim: eyup.elitass@gmail.com<br>
          <a target='_blank' href='https://github.com/aflextr/dizipal-stremio-addon'>Github</a>
 
