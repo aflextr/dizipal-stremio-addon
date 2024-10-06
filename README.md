@@ -1,6 +1,6 @@
 # Dizipal-Stremio-Addon
 
-This is an unofficial Stremio Addon for Turkish dub movie and series from Dizipal.
+This is an unofficial Stremio Addon for Turkish dub movie and series from Dizipal. If you have problem with playing Dizipal videos, after installation search for series or movie and scroll down a bit and you'll see `Series-Dizipal` and `Movie-Dizipal` section.
 
 ## Installation
 
