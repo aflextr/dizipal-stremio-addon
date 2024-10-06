@@ -33,7 +33,7 @@ h1, h2, h3 {
    position: absolute;
    left: 0px;
    right: 0px;
-   top: 10%;
+   top: 3%;
    bottom: auto;
    margin: auto
 }
@@ -100,6 +100,7 @@ button:active {
 .best img {
    width: 60px
 }
+
 `
 
 function landingTemplate(manifest) {
@@ -140,7 +141,8 @@ function landingTemplate(manifest) {
          </ul>
          </ul>
          <div>
-            <h3 class="alert">Eğer stremioyu web sürümünde kullanıyorsanız arkada stremio hizmeti ya da uygulaması çalışması gerek.</h3>
+            <h3 class="alert">Dizipal videolarını oynatmada sorun yaşıyorsanız, kurulumdan sonra dizi veya film arayın ve biraz aşağı kaydırın, Dizi-Dizipal ve Film-Dizipal bölümünü göreceksiniz.</h3>
+            <h4 class="alert">Eğer stremioyu web sürümünde kullanıyorsanız arkada stremio hizmeti ya da uygulaması çalışması gerek.</h4>
          </div>
          <div style="text-align:center; margin-bottom: 30px;">
             <h6>Bot Olmadığınızı Onaylayın</h6>
@@ -153,10 +155,10 @@ function landingTemplate(manifest) {
          </a>
          <div class="separator"></div>
          <div class="separator"></div>
-         <p>dizipal yurtdışından erişimde CloudFlare ile korunduğundan bu eklentinin çeşitli maliyetleri olmaktadır. Bu maliyetleri ne kadar uzun süre karşılayabilirim bilemediğimden yapacağınız en küçük bağış eklentinin hayatta kalabilmesi için faydalı olacaktır.<br>
+         <p>dizipal yurtdışından erişimde CloudFlare ile korunduğundan bu eklentinin çeşitli maliyetleri olmaktadır. Bu maliyetleri ne kadar uzun süre karşılayabilirim bilemediğimden yapacağınız en küçük bağış eklentinin hayatta kalabilmesi için faydalı olacaktır.</p>
          <div class="separator"></div>
-         <p>IBAN: TR05 0006 2000 6800 0006 6257 26  Eyüp Elitaş<br>
-         <p>İletişim: eyup.elitass@gmail.com<br>
+         <p>IBAN: TR05 0006 2000 6800 0006 6257 26  Eyüp Elitaş</p>
+         <p>İletişim: eyup.elitass@gmail.com</p>
          <a target='_blank' href='https://github.com/aflextr/dizipal-stremio-addon'>Github</a>
 
       </div>
