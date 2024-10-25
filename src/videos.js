@@ -29,7 +29,11 @@ async function GetVideos(id) {
 
 async function ScrapeVideoUrl(scrapeUrl) {
     try {
-        var response = await axios({ url: scrapeUrl, headers: header, method: "GET" });
+        var scrapeHeader = {
+            "referer":process.env.DIZIPAL_HOST,
+            "user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0"
+        };
+        var response = await axios({ url: scrapeUrl, headers: scrapeHeader, method: "GET" });
         if (response && response.status == 200) {
             var playerFileLink = "";
             var subtitles;

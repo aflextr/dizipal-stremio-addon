@@ -29,7 +29,8 @@ h1, h2, h3 {
 }
 
 #addon {
-   width: 550px;
+   width: 700px;
+   height: 600px;
    position: absolute;
    left: 0px;
    right: 0px;
@@ -160,7 +161,8 @@ function landingTemplate(manifest) {
          <p>IBAN: TR05 0006 2000 6800 0006 6257 26  Eyüp Elitaş</p>
          <p>İletişim: eyup.elitass@gmail.com</p>
          <a target='_blank' href='https://github.com/aflextr/dizipal-stremio-addon'>Github</a>
-
+         <a target='_blank' href='https://raw.githubusercontent.com/aflextr/donated-to-me/refs/heads/main/donate'><h4 class="alert">Bağış yapanlara teşekkür ederim.</h4></a>
+         
       </div>
       <script>
          
