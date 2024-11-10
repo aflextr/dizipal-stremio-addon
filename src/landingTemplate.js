@@ -142,7 +142,7 @@ function landingTemplate(manifest) {
          </ul>
          </ul>
          <div>
-            <h3 class="alert">Dizipal videolarını oynatmada sorun yaşıyorsanız, kurulumdan sonra dizi veya film arayın ve biraz aşağı kaydırın, Dizi-Dizipal ve Film-Dizipal bölümünü göreceksiniz.</h3>
+            <h3>Dizipal videolarını oynatmada sorun yaşıyorsanız, kurulumdan sonra dizi veya film arayın ve biraz aşağı kaydırın, Dizi-Dizipal ve Film-Dizipal bölümünü göreceksiniz.</h3>
             <h4 class="alert">Eğer stremioyu web sürümünde kullanıyorsanız arkada stremio hizmeti ya da uygulaması çalışması gerek.</h4>
          </div>
          <div style="text-align:center; margin-bottom: 30px;">
