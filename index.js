@@ -1,8 +1,8 @@
 require("dotenv").config({ path: "./.env" })
 const MANIFEST = require('./manifest');
 const landing = require("./src/landingTemplate");
-const header = require('./src/header');
-const {publishToCentral} = require("stremio-addon-sdk");
+const header = require('./header');
+const { publishToCentral } = require("stremio-addon-sdk");
 const fs = require('fs')
 const Path = require("path");
 const express = require("express");
@@ -31,6 +31,14 @@ const STALE_ERROR_AGE = 7 * 24 * 60 * 60; // 7 days
 const myCache = new NodeCache({ stdTTL: 100, checkperiod: 21600 });
 
 app.use(express.static(path.join(__dirname, "static")));
+
+//dizipal adress auto update
+(async () => {
+    var responseEnv = await axios.get("https://raw.githubusercontent.com/aflextr/dizipal-stremio-addon/refs/heads/main/.env");
+    var responseHeader = await axios.get("https://raw.githubusercontent.com/aflextr/dizipal-stremio-addon/refs/heads/main/header.js");
+    fs.writeFileSync(path.join(__dirname, ".env"), responseEnv.data);
+    fs.writeFileSync(path.join(__dirname, "header.js"), responseHeader.data);
+})();
 
 var respond = function (res, data) {
     try {
@@ -113,7 +121,7 @@ app.get("/addon/catalog/:type/:id/search=:search", async (req, res, next) => {
         search = search.replace(".json", "");
         if (id == "dizipal") {
             res.set('Cache-Control', `public, max-age=${CACHE_MAX_AGE}, stale-while-revalidate:${STALE_REVALIDATE_AGE}, stale-if-error:${STALE_ERROR_AGE}`);
-            var cached = myCache.get(search+type)
+            var cached = myCache.get(search + type)
             if (cached) {
                 return respond(res, { metas: cached });
             }
@@ -142,7 +150,7 @@ app.get("/addon/catalog/:type/:id/search=:search", async (req, res, next) => {
                     }
                 }
             }
-            myCache.set(search+type,metaData);
+            myCache.set(search + type, metaData);
             return respond(res, { metas: metaData });
         }
     } catch (error) {
@@ -226,7 +234,7 @@ app.get('/addon/stream/:type/:id/', async (req, res, next) => {
         if (id) {
             var video = await listVideo.GetVideos(id);
             if (video) {
-                const stream = {url:video.url};
+                const stream = { url: video.url };
                 if (video.subtitles) {
                     myCache.set(id, video.subtitles);
                 }
@@ -246,7 +254,7 @@ app.get('/addon/subtitles/:type/:id/:query?.json', async (req, res, next) => {
         var data = myCache.get(id)
         if (data) {
             for (const value of data) {
-                
+
                 if (String(value).includes("Türkçe")) {
                     var url = String(value).replace("[Türkçe]", "");
                     var newUrl = await WriteSubtitles(url, uuidv4());
