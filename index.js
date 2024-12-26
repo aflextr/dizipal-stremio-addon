@@ -32,14 +32,6 @@ const myCache = new NodeCache({ stdTTL: 100, checkperiod: 21600 });
 
 app.use(express.static(path.join(__dirname, "static")));
 
-//dizipal adress auto update
-(async () => {
-    var responseEnv = await axios.get("https://raw.githubusercontent.com/aflextr/dizipal-stremio-addon/refs/heads/main/.env");
-    var responseHeader = await axios.get("https://raw.githubusercontent.com/aflextr/dizipal-stremio-addon/refs/heads/main/header.js");
-    fs.writeFileSync(path.join(__dirname, ".env"), responseEnv.data);
-    fs.writeFileSync(path.join(__dirname, "header.js"), responseHeader.data);
-})();
-
 var respond = function (res, data) {
     try {
         res.setHeader('Access-Control-Allow-Origin', '*');
