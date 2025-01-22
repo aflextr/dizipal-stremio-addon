@@ -1,4 +1,4 @@
-require("dotenv").config({ path: "../.env" });
+require("dotenv").config();
 const header = require("../header");
 const sslfix = require("./sslfix");
 const cheerio = require("cheerio");

@@ -1,4 +1,4 @@
-require("dotenv").config({path:"./.env"})
+require("dotenv").config()
 const manifest = {
     id: 'org.dizipal-stremio-addon',
     version: '1.0.1',

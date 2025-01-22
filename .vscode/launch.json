@@ -6,7 +6,7 @@
     "configurations": [
         
         {
-            "runtimeExecutable": "/home/ubuntu/.nvm/versions/node/v22.11.0/bin/node",
+            "runtimeExecutable": "/home/ubuntu/.nvm/versions/node/v22.13.1/bin/node",
             "type": "node",
             "request": "launch",
             "name": "Programı Başlat",

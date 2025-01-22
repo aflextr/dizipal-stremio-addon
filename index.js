@@ -1,8 +1,7 @@
-require("dotenv").config({ path: "./.env" })
+require("dotenv").config()
 const MANIFEST = require('./manifest');
 const landing = require("./src/landingTemplate");
 const header = require('./header');
-const { publishToCentral } = require("stremio-addon-sdk");
 const fs = require('fs')
 const Path = require("path");
 const express = require("express");
@@ -17,9 +16,11 @@ const Axios = require('axios')
 const axiosRetry = require("axios-retry").default;
 const { setupCache } = require("axios-cache-interceptor");
 
+
 const instance = Axios.create();
 const axios = setupCache(instance);
 axiosRetry(axios, { retries: 2 });
+
 
 
 
