@@ -107,7 +107,7 @@ app.get("/addon/catalog/:type/:id/search=:search", async (req, res, next) => {
         if (id == "dizipal") {
             var cached = myCache.get(search + type)
             if (cached) {
-                return respond(res, { metas: cached,metaData,cacheMaxAge: CACHE_MAX_AGE, staleRevalidate: STALE_REVALIDATE_AGE, staleError: STALE_ERROR_AGE });
+                return respond(res, { metas: cached,cacheMaxAge: CACHE_MAX_AGE, staleRevalidate: STALE_REVALIDATE_AGE, staleError: STALE_ERROR_AGE });
             }
             var metaData = [];
             var video = await searchVideo.SearchMovieAndSeries(search);
@@ -135,7 +135,7 @@ app.get("/addon/catalog/:type/:id/search=:search", async (req, res, next) => {
                 }
             }
             myCache.set(search + type, metaData);
-            return respond(res, { metas: metaData,metaData,cacheMaxAge: CACHE_MAX_AGE, staleRevalidate: STALE_REVALIDATE_AGE, staleError: STALE_ERROR_AGE });
+            return respond(res, { metas: metaData,cacheMaxAge: CACHE_MAX_AGE, staleRevalidate: STALE_REVALIDATE_AGE, staleError: STALE_ERROR_AGE });
         }
     } catch (error) {
         console.log(error);
@@ -150,7 +150,7 @@ app.get('/addon/meta/:type/:id/', async (req, res, next) => {
         var metaObj = {};
         var cached = myCache.get(id);
         if (cached) {
-            return respond(res, { meta: cached,metaData,cacheMaxAge: CACHE_MAX_AGE, staleRevalidate: STALE_REVALIDATE_AGE, staleError: STALE_ERROR_AGE })
+            return respond(res, { meta: cached,cacheMaxAge: CACHE_MAX_AGE, staleRevalidate: STALE_REVALIDATE_AGE, staleError: STALE_ERROR_AGE })
         }
 
         var data = await searchVideo.SearchMetaMovieAndSeries(id, type);
@@ -194,10 +194,10 @@ app.get('/addon/meta/:type/:id/', async (req, res, next) => {
                     }
                 }
                 myCache.set(id, metaObj);
-                return respond(res, { meta: metaObj,metaData,cacheMaxAge: CACHE_MAX_AGE, staleRevalidate: STALE_REVALIDATE_AGE, staleError: STALE_ERROR_AGE })
+                return respond(res, { meta: metaObj,cacheMaxAge: CACHE_MAX_AGE, staleRevalidate: STALE_REVALIDATE_AGE, staleError: STALE_ERROR_AGE })
             } else {
                 myCache.set(id, metaObj);
-                return respond(res, { meta: metaObj,metaData,cacheMaxAge: CACHE_MAX_AGE, staleRevalidate: STALE_REVALIDATE_AGE, staleError: STALE_ERROR_AGE })
+                return respond(res, { meta: metaObj,cacheMaxAge: CACHE_MAX_AGE, staleRevalidate: STALE_REVALIDATE_AGE, staleError: STALE_ERROR_AGE })
             }
 
         }
@@ -220,7 +220,7 @@ app.get('/addon/stream/:type/:id/', async (req, res, next) => {
                 if (video.subtitles) {
                     myCache.set(id, video.subtitles);
                 }
-                return respond(res, { streams: [stream],metaData,cacheMaxAge: CACHE_MAX_AGE, staleRevalidate: STALE_REVALIDATE_AGE, staleError: STALE_ERROR_AGE })
+                return respond(res, { streams: [stream],cacheMaxAge: CACHE_MAX_AGE, staleRevalidate: STALE_REVALIDATE_AGE, staleError: STALE_ERROR_AGE })
             }
         }
     } catch (error) {
@@ -254,7 +254,7 @@ app.get('/addon/subtitles/:type/:id/:query?.json', async (req, res, next) => {
             }
 
             if (subtitles.length > 0) {
-                return respond(res, { subtitles: subtitles,metaData,cacheMaxAge: CACHE_MAX_AGE, staleRevalidate: STALE_REVALIDATE_AGE, staleError: STALE_ERROR_AGE })
+                return respond(res, { subtitles: subtitles,cacheMaxAge: CACHE_MAX_AGE, staleRevalidate: STALE_REVALIDATE_AGE, staleError: STALE_ERROR_AGE })
             }
 
         }
