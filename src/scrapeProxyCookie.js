@@ -1,20 +1,24 @@
-const axios = require('axios');
-const tough = require('tough-cookie');
-const { wrapper } = require('axios-cookiejar-support');
+const Axios = require('axios');
+const axiosRetry = require("axios-retry").default;
+const { setupCache } = require("axios-cache-interceptor");
 
-const cookieJar = new tough.CookieJar();
-const client = wrapper(axios.create({ jar: cookieJar }));
+const instance = Axios.create();
+const axios = setupCache(instance);
+axiosRetry(axios, { retries: 2 });
 
 async function fetchWithCookies(url) {
   try {
-    await client.get(url);
-    
-    var cookies = cookieJar.getCookiesSync(url);
-    cookies = cookies.map(cookie => cookie.cookieString()).join('; ');
-    return cookies
+    var cookieData = {
+      url: url,
+      token: "free"
+    }
+    var response = await axios.post("https://cookie-grabber-website.onrender.com/api/v1/getcookie", cookieData);
+    if (response.data.status == true) {
+      return response.data;
+    }
   } catch (error) {
     console.error('Error fetching the URL:', error);
   }
 }
 
-module.exports = {fetchWithCookies};
+module.exports = { fetchWithCookies };

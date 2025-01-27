@@ -9,13 +9,13 @@ This is an unofficial Stremio Addon for Turkish dub movie and series from Dizipa
 You can install it through
 
 ```sh {"id":"01HSKT0P72G767ZCC6B74KVH6S"}
-https://dizipal-stremio-addon.onrender.com/
+https://bf17379232ce-dizipal-stremio-addon.baby-beamup.club
 ```
 
 or
 
 ```sh {"id":"01HSKT0P7365CE70JETEPZ6JJZ"}
-stremio://dizipal-stremio-addon.onrender.com/manifest.json
+stremio://bf17379232ce-dizipal-stremio-addon.baby-beamup.club/manifest.json
 ```
 
 ### Local
