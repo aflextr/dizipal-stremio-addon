@@ -12,7 +12,7 @@ async function fetchWithCookies(url) {
       url: url,
       token: "free"
     }
-    var response = await axios.post("https://cookie-grabber-website.onrender.com/api/v1/getcookie", cookieData);
+    var response = await axios.post("http://130.61.177.178:3214/api/v1/getcookie", cookieData);
     if (response.data.status == true) {
       return response.data;
     }
