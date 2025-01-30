@@ -34,7 +34,7 @@ async function SearchMovieAndSeries(name) {
 async function SearchMetaMovieAndSeries(id, type) {
     try {
 
-        var response = await axios({ ...sslfix, url: process.env.PROXY_URL +"/"+ id, headers: header, method: "GET" });
+        var response = await axios({ ...sslfix, url: process.env.PROXY_URL + id, headers: header, method: "GET" });
         if (response && response.status == 200 && response.statusText == "OK") {
             var $ = cheerio.load(response.data);
             if (type == "series") {
