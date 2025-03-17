@@ -549,7 +549,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function landingTemplate(manifest) {
 	const background = manifest.background || 'https://dl.strem.io/addon-background.jpg'
 	const logo = manifest.logo || 'https://dl.strem.io/addon-logo.png'
-   const favicon = manifest.favicon || 'https://dl.strem.io/addon-logo.png'
+   const favicon = '/images/favicon.png'
 	const contactHTML = manifest.contactEmail ?
 		`<div class="contact">
          <p>Contact ${manifest.name} creator:</p>
