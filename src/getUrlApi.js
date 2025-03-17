@@ -13,6 +13,7 @@ async function fetchWithUrl() {
             if (response.status == 200) {
                 response.data.currentSiteURL = String(response.data.currentSiteURL).replace(".com", "");
                 process.env.PROXY_URL = "https://" + new URL(response.data.currentSiteURL).hostname + process.env.PROXYTEMPLATEURL;
+                return process.env.PROXY_URL;
             }
         }
     } catch (error) {
