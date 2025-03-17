@@ -1,5 +1,8 @@
 require("dotenv").config();
 const scrapeCookie = require("./src/scrapeProxyCookie");
+const getUrlApi = require("./src/getUrlApi");
+
+getUrlApi.fetchWithUrl().then();
 scrapeCookie.fetchWithCookies(process.env.PROXY_URL).then((value)=>{
     if (value.data.length > 10) {
         header.Cookie = value.data;

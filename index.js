@@ -29,35 +29,24 @@ const CACHE_MAX_AGE = 4 * 60 * 60; // 4 hours in seconds
 const STALE_REVALIDATE_AGE = 4 * 60 * 60; // 4 hours
 const STALE_ERROR_AGE = 7 * 24 * 60 * 60; // 7 days
 
-const myCache = new NodeCache({ stdTTL: 100, checkperiod: 21600 });
+const myCache = new NodeCache({ stdTTL: 30*60, checkperiod: 300 });
 
 app.use(express.static(path.join(__dirname, "static")));
 
 var respond = function (res, data) {
-    try {
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Access-Control-Allow-Headers', '*');
         res.setHeader('Content-Type', 'application/json; charset=utf-8');
         res.send(data);
-    } catch (error) {
-        console.log(error);
-    }
-
 };
 
 
 app.get('/', function (req, res) {
-    try {
         res.set('Content-Type', 'text/html');
         res.send(landing(MANIFEST));
-    } catch (error) {
-        console.log(error);
-    }
-
 });
 
 app.get("/:userConf?/configure", function (req, res) {
-    try {
         if (req.params.userConf !== "addon") {
             res.redirect("/addon/configure")
         } else {
@@ -65,38 +54,24 @@ app.get("/:userConf?/configure", function (req, res) {
             const newManifest = { ...MANIFEST };
             res.send(landing(newManifest));
         }
-    } catch (error) {
-        console.log(error);
-    }
-
 });
 
 app.get('/manifest.json', function (req, res) {
-    try {
         const newManifest = { ...MANIFEST };
         // newManifest.behaviorHints.configurationRequired = false;
         newManifest.behaviorHints.configurationRequired = true;
-        respond(res, newManifest);
-    } catch (error) {
-        console.log(error);
-    }
-
+        return respond(res, newManifest);
 });
 
 app.get('/:userConf/manifest.json', function (req, res) {
-    try {
         const newManifest = { ...MANIFEST };
         if (!((req || {}).params || {}).userConf) {
             newManifest.behaviorHints.configurationRequired = true;
-            respond(res, newManifest);
+           return respond(res, newManifest);
         } else {
             newManifest.behaviorHints.configurationRequired = false;
-            respond(res, newManifest);
+           return respond(res, newManifest);
         }
-    } catch (error) {
-        console.log(error);
-    }
-
 });
 
 //CODE
@@ -241,14 +216,14 @@ app.get('/addon/subtitles/:type/:id/:query?.json', async (req, res, next) => {
                     var url = String(value).replace("[Türkçe]", "");
                     var newUrl = await WriteSubtitles(url, uuidv4());
                     if (newUrl) {
-                        subtitles.push({ url: newUrl, lang: "tur" });
+                        subtitles.push({ url: newUrl, lang: "tur",id:"dizipal-tur" });
                     }
                 }
                 if (String(value).includes("İngilizce")) {
                     var url = String(value).replace("[İngilizce]", "");
                     var newUrl = await WriteSubtitles(url, uuidv4());
                     if (newUrl) {
-                        subtitles.push({ url: newUrl, lang: "eng" });
+                        subtitles.push({ url: newUrl, lang: "eng",id:"dizipal-eng" });
                     }
                 }
             }
@@ -318,7 +293,10 @@ function CheckSubtitleFoldersAndFiles() {
 if (module.parent) {
     module.exports = app;
 } else {
-    app.listen(process.env.PORT || 7000, function () {
+    app.listen(process.env.PORT || 7000, function (err) {
+        if (err) {
+           return Error("Error in server setup",err.message);
+        }
         console.log(`extension running port : ${process.env.PORT}`)
     });
 }
