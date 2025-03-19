@@ -4,7 +4,7 @@ const manifest = {
     version: '1.0.2',
     name: 'Dizipal',
     description: "Dizipal'den dizi ve filmleri stremionuza getirir.  Proxy Kullandığımız için eklenti yavaş çalışabilir.",
-    contactEmail: "eyup.elitass@gmail.com"+ "<p><a target='_blank' href='https://github.com/aflextr/dizipal-stremio-addon'>GitHub</a></p>",
+    contactEmail: "eyup.elitass@gmail.com",
     logo: `${process.env.HOSTING_URL}/images/dizipal.png`,
     background: `${process.env.HOSTING_URL}/images/background.jpg`,
     behaviorHints: {
