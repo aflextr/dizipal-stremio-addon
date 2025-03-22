@@ -16,6 +16,9 @@ async function fetchWithUrl() {
                 return process.env.PROXY_URL;
             }
         }
+        else{
+            return undefined;
+        }
     } catch (error) {
         console.error('Error fetching the URL:', error);
     }

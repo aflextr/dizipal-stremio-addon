@@ -11,6 +11,10 @@ getUrlApi.fetchWithUrl().then((value1) => {
                 header.Origin = value1;
                 header.Referer = value1;
             }
+        }else{
+            header.Cookie = value2.data;
+            header.Origin = process.env.PROXY_URL;
+            header.Referer = process.env.PROXY_URL;
         }
     })
 });
