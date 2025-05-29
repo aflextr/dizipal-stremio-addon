@@ -8,7 +8,7 @@ const manifest = {
     logo: `${process.env.HOSTING_URL}/images/dizipal.png`,
     background: `${process.env.HOSTING_URL}/images/background.jpg`,
     behaviorHints: {
-        configurable: true,
+        configurable: false,
         configurationRequired: true,
     },
     config: [{
