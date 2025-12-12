@@ -13,13 +13,11 @@ const NodeCache = require("node-cache");
 const { v4: uuidv4 } = require('uuid');
 const subsrt = require('subtitle-converter');
 const Axios = require('axios')
-const axiosRetry = require("axios-retry").default;
 const { setupCache } = require("axios-cache-interceptor");
 
 
 const instance = Axios.create();
 const axios = setupCache(instance);
-axiosRetry(axios, { retries: 2 });
 
 
 
