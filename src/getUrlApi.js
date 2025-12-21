@@ -10,7 +10,12 @@ async function fetchWithUrl() {
             var response = await axios.get("https://raw.githubusercontent.com/dizipaltv/api/refs/heads/main/dizipal.json");
             if (response.status == 200) {
                 response.data.currentSiteURL = String(response.data.currentSiteURL).replace(".com", "");
-                process.env.PROXY_URL = "https://" + new URL(response.data.currentSiteURL).hostname + process.env.PROXYTEMPLATEURL;
+                const urlFromAPI= "https://" + new URL(response.data.currentSiteURL).hostname + process.env.PROXYTEMPLATEURL;
+                process.env.PROXY_URL = urlFromAPI;
+                const finalResponse = await axios.get(urlFromAPI);
+                if (finalResponse.request.res.responseUrl) {
+                    process.env.PROXY_URL = finalResponse.request.res.responseUrl.replace(/\/$/, "");
+                }
                 return process.env.PROXY_URL;
             }
         }
