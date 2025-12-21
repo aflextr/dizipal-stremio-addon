@@ -46,7 +46,7 @@ app.get('/', function (req, res) {
 
 app.get("/:userConf?/configure", function (req, res) {
         if (req.params.userConf !== "addon") {
-            res.redirect("/addon/configure")
+            res.redirect("/configure")
         } else {
             res.set('Content-Type', 'text/html');
             const newManifest = { ...MANIFEST };
@@ -57,7 +57,7 @@ app.get("/:userConf?/configure", function (req, res) {
 app.get('/manifest.json', function (req, res) {
         const newManifest = { ...MANIFEST };
         // newManifest.behaviorHints.configurationRequired = false;
-        newManifest.behaviorHints.configurationRequired = true;
+        newManifest.behaviorHints.configurationRequired = false;
         return respond(res, newManifest);
 });
 
@@ -73,7 +73,7 @@ app.get('/:userConf/manifest.json', function (req, res) {
 });
 
 //CODE
-app.get("/addon/catalog/:type/:id/search=:search", async (req, res, next) => {
+app.get("/catalog/:type/:id/search=:search", async (req, res, next) => {
     try {
         var { type, id, search } = req.params;
         search = search.replace(".json", "");
@@ -116,7 +116,7 @@ app.get("/addon/catalog/:type/:id/search=:search", async (req, res, next) => {
 
 })
 
-app.get('/addon/meta/:type/:id/', async (req, res, next) => {
+app.get('/meta/:type/:id/', async (req, res, next) => {
     try {
         var { type, id } = req.params;
         id = String(id).replace(".json", "");
@@ -182,7 +182,7 @@ app.get('/addon/meta/:type/:id/', async (req, res, next) => {
 })
 
 
-app.get('/addon/stream/:type/:id/', async (req, res, next) => {
+app.get('/stream/:type/:id/', async (req, res, next) => {
     try {
         var { type, id } = req.params;
         id = String(id).replace(".json", "");
@@ -201,7 +201,7 @@ app.get('/addon/stream/:type/:id/', async (req, res, next) => {
     }
 })
 
-app.get('/addon/subtitles/:type/:id/:query?.json', async (req, res, next) => {
+app.get('/subtitles/:type/:id/:query?.json', async (req, res, next) => {
     try {
         var { type, id } = req.params;
         id = String(id).replace(".json", "");
